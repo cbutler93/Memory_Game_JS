@@ -43,7 +43,7 @@ function revealCard(el) {
 };
 
 function hideCards(...cards) {
-    for (let card of cards) {
+    for (const card of cards) {
         card.classList.remove('open', 'show');
     }
 };
@@ -65,13 +65,9 @@ function checkCards(cards) {
 // Initialize/randomize cards for a new game.
 const newCards = initCards();
 
-// Initialize game by adding random class to each card
+// Initialize game by hiding all cards and adding a random icon to each.
 const cardElements = document.querySelectorAll('.card');
-
-// Reset cards on board by removing open, match, show classes from cards.
 cardElements.forEach(el => el.classList.remove('open', 'match', 'show'));
-
-// Select all i elements, remove second class (icon), add new icon from the randomized array of icon classes.
 const cardSymbols = document.querySelectorAll('.card i');
 cardSymbols.forEach(el => {
     const curIcon = el.classList[1];
