@@ -42,16 +42,21 @@ function revealCard(el) {
     el.classList.add('open', 'show');
 };
 
+function hideCards(...cards) {
+    for (let card of cards) {
+        card.classList.remove('open', 'show');
+    }
+};
+
 function checkCards(cards) {
-    const firstIcon = cards[0].classList[1];
-    const secondIcon = cards[1].classList[1];
-    if (firstIcon === secondIcon) {
+    const firstCard = cards[0];
+    const secondCard = cards[1];
+    if (firstCard.classList[1] === secondCard.classList[1]) {
         /* Select the Icon's parent node (the card li) and adjust classes accordingly. */
-        firstIcon.parentNode.classList.add('match');
-        secondIcon.parentNode.classList.add('match');
+        firstCard.parentNode.classList.add('match');
+        secondCard.parentNode.classList.add('match');
     } else {
-        firstIcon.parentNode.classList.remove('open', 'show');
-        secondIcon.parentNode.classList.remove('open', 'show');
+        hideCards(firstCard.parentNode, secondCard.parentNode);
     }
     // Reset cardsPicked array after a match is checked.
     cardsPicked = [];
