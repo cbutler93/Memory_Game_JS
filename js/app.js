@@ -34,10 +34,29 @@ function initCards() {
      // Randomize cards for start of game.
      const randCards = randomizeArray(initCards);
      return randCards;
-}
+};
 
-// Initialize Game.
-const newCards = initGame();
+function revealCard(el) {
+    el.classList.add('open', 'show');
+};
+
+function checkCards(cards) {
+    const firstIcon = cards[0].classList[1];
+    const secondIcon = cards[1].classList[1];
+    if (firstIcon === secondIcon) {
+        /* Select the Icon's parent node (the card li) and adjust classes accordingly. */
+        firstIcon.parentNode.classList.add('match');
+        secondIcon.parentNode.classList.add('match');
+    } else {
+        firstIcon.parentNode.classList.remove('open', 'show');
+        secondIcon.parentNode.classList.remove('open', 'show');
+    }
+    // Reset cardsPicked array after a match is checked.
+    cardsPicked = [];
+};
+
+// Initialize/randomize cards for a new game.
+const newCards = initCards();
 
 // Initialize game by adding random class to each card
 const cardElements = document.querySelectorAll('.card');
@@ -52,4 +71,28 @@ cardSymbols.forEach(el => {
     el.classList.remove(curIcon);
     const newIcon = newCards.pop();
     el.classList.add(newIcon);
+});
+
+let cardsPicked = [];
+let totalGuesses = 0;
+
+// Select deck and add event listener for clicks.
+const deck = document.querySelector('ul.deck');
+deck.addEventListener('click', (e) => {
+    // Don't do anything if a card (li) wasn't clicked.
+    if (e.target.nodeName !== 'LI') return;
+    // If a card was clicked, check if it was already opened.
+    const targetCard = e.target;
+    if (targetCard.classList.contains('open') || targetCard.classList.contains('show')) {
+        alert('Card already open. Please choose another!');
+    } else {
+        /*If the target card isn't revealed, reveal it and add the card's child icon to the picked cards array. Increment total game moves. */
+        revealCard(targetCard);
+        cardsPicked.push(targetCard.querySelector('i'));
+        totalGuesses += 1;
+    }
+    // If two cards have been picked, check the cards for a match.
+    if (cardsPicked.length === 2) {
+        checkCards(cardsPicked);
+    }
 });
