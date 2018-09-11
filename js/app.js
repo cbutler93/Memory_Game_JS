@@ -1,6 +1,8 @@
 /* // TODO:
-1) Initialize game by adding random class to each card.
-2) Create function to reveal card on click.
+1) After checking for a card match, check if the game is over.
+2) When the game is over, show the total number of guesses it took to complete the game.
+3) After a certain number of guesses, adjust the star rating.
+4) Make the game reset button functional.
 */
 
 // Create function to scramble initialized cards array
