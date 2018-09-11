@@ -1,19 +1,6 @@
 /* // TODO:
-1) Create array to hold available cards (icons/classes)
-2) Create function to randomly shuffle card array.
-3) Create function to reveal card on click.
-*/
-
-// Initialize card array
-/* Available classes:
-fa-diamond
-fa-paper-plane-o
-fa-anchor
-fa-bolt
-fa-cube
-fa-leaf
-fa-bicycle
-fa-bomb
+1) Initialize game by adding random class to each card.
+2) Create function to reveal card on click.
 */
 
 // Create function to scramble initialized cards array
