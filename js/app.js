@@ -19,17 +19,37 @@ function randomizeArray(arr) {
      return randArray;
 };
 
-// Initialize Card Array
-const initCards = [
-     'fa-diamond', 'fa-diamond',
-     'fa-paper-plane-o', 'fa-paper-plane-o',
-     'fa-anchor', 'fa-anchor',
-     'fa-bolt', 'fa-bolt',
-     'fa-cube', 'fa-cube',
-     'fa-leaf', 'fa-leaf',
-     'fa-bicycle', 'fa-bicycle',
-     'fa-bomb', 'fa-bomb'
-];
+function initCards() {
+     // Initialize Card Array
+     const initCards = [
+          'fa-diamond', 'fa-diamond',
+          'fa-paper-plane-o', 'fa-paper-plane-o',
+          'fa-anchor', 'fa-anchor',
+          'fa-bolt', 'fa-bolt',
+          'fa-cube', 'fa-cube',
+          'fa-leaf', 'fa-leaf',
+          'fa-bicycle', 'fa-bicycle',
+          'fa-bomb', 'fa-bomb'
+     ];
+     // Randomize cards for start of game.
+     const randCards = randomizeArray(initCards);
+     return randCards;
+}
 
-// Randomize cards for start of game.
-const randCards = randomizeArray(initCards);
+// Initialize Game.
+const newCards = initGame();
+
+// Initialize game by adding random class to each card
+const cardElements = document.querySelectorAll('.card');
+
+// Reset cards on board by removing open, match, show classes from cards.
+cardElements.forEach(el => el.classList.remove('open', 'match', 'show'));
+
+// Select all i elements, remove second class (icon), add new icon from the randomized array of icon classes.
+const cardSymbols = document.querySelectorAll('.card i');
+cardSymbols.forEach(el => {
+    const curIcon = el.classList[1];
+    el.classList.remove(curIcon);
+    const newIcon = newCards.pop();
+    el.classList.add(newIcon);
+});
