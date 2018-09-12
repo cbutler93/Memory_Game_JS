@@ -45,6 +45,10 @@ h1 {
     display: none;
 }
 
+.finished p {
+    padding: 10px;
+}
+
 .finished.slide-in {
     animation: slide-in;
     animation-duration: 0.5s;

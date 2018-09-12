@@ -1,10 +1,8 @@
 /* TODO:
-1) After checking for a card match, check if the game is over.
-2) When the game is over, show the total number of guesses it took to complete the game.
-4) Make the game reset button functional.
+1) Clean up code.
 */
 
-let totalMatches, cardsPicked, totalMoves, timer, totalTime, starRating;
+let totalMatches, cardsPicked, totalMoves, timer, totalTime, starRating, gameOver;
 const deck = document.querySelector('ul.deck');
 const restart = document.querySelector('.restart');
 const playAgain = document.querySelector('.play-again');
@@ -64,7 +62,8 @@ function hideCards(...cards) {
 };
 
 function checkGameOver(matches) {
-    if (matches === 1) {
+    if (matches === 8) { // There are 16 cards, 8 two-card matches means all cards matched.
+        gameOver = true;
         gameStats.style.display = 'inline-block';
         gameStats.classList.add('slide-in');
         const timeStats = document.querySelector('.total-time');
@@ -98,14 +97,16 @@ function resetClock() {
     startMessage.classList.remove('shrink');
     const timerElements = document.querySelectorAll('.clock span');
     timerElements.forEach(el => el.textContent = "00");
+    clearInterval(timer);
 }
 
 function resetGame() {
     cardsPicked = [];
     totalMoves = 0;
     starRating = 3;
-    updateMoveDisplay();
     totalMatches = 0;
+    gameOver = false;
+    updateMoveDisplay();
     initCards();
     resetClock();
     gameStats.style.display = 'none';
@@ -164,6 +165,11 @@ function updateMoveDisplay() {
 // Add event listener for card selections.
 deck.addEventListener('click', (e) => {
     if (totalMoves === 0) {
+        timer = setClock();
+    }
+
+    if (gameOver) {
+        resetGame();
         timer = setClock();
     }
     // Don't do anything if a card (li) wasn't clicked.

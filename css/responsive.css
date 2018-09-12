@@ -1,0 +1,31 @@
+@media screen and (max-width: 800px) {
+    .deck {
+        width: 90%;
+        max-width: 100%;
+    }
+
+    .deck .card {
+        width: 75px;
+        height: 75px;
+        margin: 10px;
+    }
+
+    section.score-panel {
+        width: 75%;
+        max-width: 100%;
+    }
+
+    .total-time, .star-rating {
+        font-size: 18px;
+    }
+
+    .clock span {
+        font-size: 30px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .total-time, .star-rating {
+        font-size: 14px;
+    }
+}
