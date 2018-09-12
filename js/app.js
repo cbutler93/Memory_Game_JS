@@ -4,7 +4,7 @@
 4) Make the game reset button functional.
 */
 
-let totalMatches, cardsPicked, totalMoves;
+let totalMatches, cardsPicked, totalMoves, timer;
 
 // Create function to scramble initialized cards array
 function randomizeArray(arr) {
@@ -71,7 +71,7 @@ function setClock() {
     const startTime = new Date().getTime();
     const minuteSpan = document.querySelector('span.minutes');
     const secondSpan = document.querySelector('span.seconds');
-    setInterval(() => {
+    const timer = setInterval(() => {
         const curTime = new Date().getTime();
         const totalSeconds = ((curTime - startTime) / 1000).toFixed(0);
         const seconds = totalSeconds < 60 ? totalSeconds : totalSeconds % 60;
@@ -79,6 +79,15 @@ function setClock() {
         secondSpan.textContent = seconds < 10 ? `0${seconds}` : `${seconds}`;
         minuteSpan.textContent = minutes < 10 ? `0${minutes}` : `${minutes}`;
     }, 1000);
+    return timer;
+}
+
+function resetClock() {
+    const startMessage = document.querySelector('p.start');
+    startMessage.classList.remove('shrink');
+    const timerElements = document.querySelectorAll('.clock span');
+    timerElements.forEach(el => el.textContent = "00");
+    clearInterval(timer);
 }
 
 function resetGame() {
@@ -87,6 +96,7 @@ function resetGame() {
     updateMoveDisplay();
     totalMatches = 0;
     initCards();
+    resetClock();
 }
 
 function checkCards(cards) {
@@ -140,7 +150,7 @@ function updateMoveDisplay() {
 const deck = document.querySelector('ul.deck');
 deck.addEventListener('click', (e) => {
     if (totalMoves === 0) {
-        setClock();
+        timer = setClock();
     }
     // Don't do anything if a card (li) wasn't clicked.
     if (e.target.nodeName !== 'LI') return;
