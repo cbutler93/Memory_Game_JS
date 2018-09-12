@@ -34,7 +34,17 @@ h1 {
 }
 
 /*
- * Styles for the deck of cards
+ * Clock
+ */
+
+ .clock {
+     margin-top: 20px;
+     margin-bottom: 20px;
+     font-size: 23px;
+ }
+
+/*
+ * Animations
  */
 
 @keyframes wiggle {
@@ -52,6 +62,10 @@ h1 {
     75% {transform: rotateZ(270deg);}
     100% {transform: rotateZ(360deg);}
 }
+
+/*
+ * Styles for the deck of cards
+ */
 
 .deck {
     width: 660px;
