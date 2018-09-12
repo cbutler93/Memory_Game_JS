@@ -37,6 +37,22 @@ h1 {
  * Styles for the deck of cards
  */
 
+@keyframes wiggle {
+    0% {transform: rotateZ(0deg);}
+    25% {transform: rotateZ(5deg);}
+    50% {transform: rotateZ(0deg);}
+    75% {transform: rotateZ(-5deg);}
+    100% {transform: rotateZ(0deg);}
+}
+
+@keyframes match {
+    0% {transform: rotateZ(0deg);}
+    25% {transform: rotateZ(90deg);}
+    50% {transform: rotateZ(180deg);}
+    75% {transform: rotateZ(270deg);}
+    100% {transform: rotateZ(360deg);}
+}
+
 .deck {
     width: 660px;
     min-height: 680px;
@@ -64,6 +80,9 @@ h1 {
     align-items: center;
     box-shadow: 3px 2px 5px 0 rgba(46, 61, 73, 0.5);
     transition: background 0.2s ease;
+    animation-name: none;
+    animation-duration: 0.2s;
+    animation-iteration-count: 2;
 }
 
 .deck .card.open {
@@ -80,6 +99,10 @@ h1 {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
+}
+
+.deck .card.wrong {
+    background: rgb(227, 65, 65);
 }
 
 /*

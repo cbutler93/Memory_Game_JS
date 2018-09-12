@@ -54,7 +54,8 @@ function revealCard(el) {
 
 function hideCards(...cards) {
     for (const card of cards) {
-        card.classList.remove('open', 'show');
+        card.classList.remove('open', 'show', 'wrong');
+        card.style.animationName = 'none';
     }
 };
 
@@ -79,12 +80,21 @@ function checkCards(cards) {
     const secondCard = secondIcon.parentNode;
     if (firstIcon.classList[1] === secondIcon.classList[1]) {
         /* Select the Icon's parent node (the card li) and adjust classes accordingly. */
-        firstCard.classList.add('match');
-        secondCard.classList.add('match');
+        for (card of [firstCard, secondCard]) {
+            card.classList.add('match');
+            card.style.animationIterationCount = '1';
+            card.style.animationTimingFunction = 'ease-in-out';
+            card.style.animationDuration = '0.3s';
+            card.style.animationName = 'match';
+        }
         totalMatches += 1;
         checkGameOver(totalMatches);
     } else {
         // Keep both flipped cards shown for 1 second, then hide them.
+        for (card of [firstCard, secondCard]) {
+            card.classList.add('wrong');
+            card.style.animationName = 'wiggle';
+        }
         setTimeout(hideCards, 1000, firstCard, secondCard);
     }
 };
