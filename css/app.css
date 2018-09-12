@@ -33,6 +33,49 @@ h1 {
     font-weight: 300;
 }
 
+.finished {
+    background-color: #f5f8fb;
+    text-align: center;
+    border: 5px solid goldenrod;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.57);
+    width: 50%;
+    max-width: 100%;
+    z-index: 10;
+    position: absolute;
+    transform: translate(-50%, -50%;);
+    display: none;
+}
+
+.fa-trophy {
+    margin-top: 20px;
+    padding: 10px;
+    color: goldenrod;
+    font-size: 75px;
+}
+
+.you-win {
+    font-size: 30px;
+}
+
+.total-time, .star-rating {
+    font-size: 24px;
+}
+
+.play-again {
+    font-size: 20px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.play-again:hover {
+    background-color: rgb(34, 132, 222);
+    color: #fff;
+}
+
 /*
  * Clock
  */
@@ -48,6 +91,11 @@ h1 {
      padding: 5px;
      font-size: 50px;
      color: #2e3d49;
+ }
+
+ .clock .start {
+     margin: 0;
+     padding: 0;
  }
 
  .minutes::after {
@@ -93,7 +141,7 @@ h1 {
     25% {font-size: 25px;}
     50% {font-size: 16px;}
     75% {font-size: 8px;}
-    100% {font-size: 0px; display: none; margin: 0;}
+    100% {font-size: 0px; display: none;}
 }
 
 /*

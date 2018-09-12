@@ -4,7 +4,11 @@
 4) Make the game reset button functional.
 */
 
-let totalMatches, cardsPicked, totalMoves, timer;
+let totalMatches, cardsPicked, totalMoves, timer, totalTime, starRating;
+const deck = document.querySelector('ul.deck');
+const restart = document.querySelector('.restart');
+const playAgain = document.querySelector('.play-again');
+const gameStats = document.querySelector('.finished');
 
 // Create function to scramble initialized cards array
 function randomizeArray(arr) {
@@ -61,7 +65,12 @@ function hideCards(...cards) {
 
 function checkGameOver(matches) {
     if (matches === 8) {
-        setTimeout(window.alert, 500, 'Game Over!');
+        gameStats.style.display = 'inline-block';
+        const timeStats = document.querySelector('.total-time');
+        const starsEarned = document.querySelector('.star-rating');
+        timeStats.textContent = `It took you ${totalTime} to complete the game!`;
+        starsEarned.textContent = `You finished the game with a ${starRating}-star rating!`;
+        clearInterval(timer);
     }
 };
 
@@ -78,6 +87,7 @@ function setClock() {
         const minutes = Math.floor(totalSeconds / 60);
         secondSpan.textContent = seconds < 10 ? `0${seconds}` : `${seconds}`;
         minuteSpan.textContent = minutes < 10 ? `0${minutes}` : `${minutes}`;
+        totalTime = `${minutes} ${minutes !== 1 ? `Minutes` : `Minute`} and ${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
     }, 1000);
     return timer;
 }
@@ -87,16 +97,17 @@ function resetClock() {
     startMessage.classList.remove('shrink');
     const timerElements = document.querySelectorAll('.clock span');
     timerElements.forEach(el => el.textContent = "00");
-    clearInterval(timer);
 }
 
 function resetGame() {
     cardsPicked = [];
     totalMoves = 0;
+    starRating = 3;
     updateMoveDisplay();
     totalMatches = 0;
     initCards();
     resetClock();
+    gameStats.style.display = 'none';
 }
 
 function checkCards(cards) {
@@ -133,9 +144,11 @@ function updateMoveDisplay() {
         if (totalMoves === 25) {
             const thirdStar = document.querySelectorAll('.fa-star')[2];
             thirdStar.classList.replace('fa-star', 'fa-star-o');
+            starRating = 2;
         } else if (totalMoves === 40) {
             const secondStar = document.querySelectorAll('.fa-star')[1];
             secondStar.classList.replace('fa-star', 'fa-star-o');
+            starRating = 1;
         }
     } else if (totalMoves === 0) { // If the function call is from resetGame().
         moves.textContent = `${totalMoves} Moves`;
@@ -147,7 +160,6 @@ function updateMoveDisplay() {
 };
 
 // Add event listener for card selections.
-const deck = document.querySelector('ul.deck');
 deck.addEventListener('click', (e) => {
     if (totalMoves === 0) {
         timer = setClock();
@@ -173,7 +185,9 @@ deck.addEventListener('click', (e) => {
 });
 
 // Add event listener for clicks on the reset button.
-const restart = document.querySelector('.restart');
 restart.addEventListener('click', resetGame);
+
+// Add event listener for play again button.
+playAgain.addEventListener('click', resetGame);
 
 resetGame();
