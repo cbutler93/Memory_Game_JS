@@ -1,9 +1,10 @@
 /* TODO:
 1) After checking for a card match, check if the game is over.
 2) When the game is over, show the total number of guesses it took to complete the game.
-3) After a certain number of guesses, adjust the star rating.
 4) Make the game reset button functional.
 */
+
+let totalMatches, cardsPicked, totalMoves;
 
 // Create function to scramble initialized cards array
 function randomizeArray(arr) {
@@ -34,8 +35,17 @@ function initCards() {
           'fa-bomb', 'fa-bomb'
      ];
      // Randomize cards for start of game.
-     const randCards = randomizeArray(initCards);
-     return randCards;
+     const newCards = randomizeArray(initCards);
+     // Initialize game by hiding all cards and adding a random icon to each.
+     const cardElements = document.querySelectorAll('.card');
+     cardElements.forEach(el => el.classList.remove('open', 'match', 'show'));
+     const cardSymbols = document.querySelectorAll('.card i');
+     cardSymbols.forEach(el => {
+         const curIcon = el.classList[1];
+         el.classList.remove(curIcon);
+         const newIcon = newCards.pop();
+         el.classList.add(newIcon);
+     });
 };
 
 function revealCard(el) {
@@ -48,6 +58,20 @@ function hideCards(...cards) {
     }
 };
 
+function checkGameOver(matches) {
+    if (matches === 8) {
+        setTimeout(window.alert, 500, 'Game Over!');
+    }
+};
+
+function resetGame() {
+    cardsPicked = [];
+    totalMoves = 0;
+    updateMoveDisplay();
+    totalMatches = 0;
+    initCards();
+}
+
 function checkCards(cards) {
     const firstIcon = cards[0];
     const secondIcon = cards[1];
@@ -57,36 +81,36 @@ function checkCards(cards) {
         /* Select the Icon's parent node (the card li) and adjust classes accordingly. */
         firstCard.classList.add('match');
         secondCard.classList.add('match');
+        totalMatches += 1;
+        checkGameOver(totalMatches);
     } else {
         // Keep both flipped cards shown for 1 second, then hide them.
         setTimeout(hideCards, 1000, firstCard, secondCard);
     }
 };
 
-function updateGuessCount() {
-    totalGuesses += 1;
+function updateMoveDisplay() {
     const moves = document.querySelector('.moves');
-    moves.textContent = totalGuesses;
+    if (totalMoves > 0) { // If the function call isn't to reset the moves/star ratings.
+        moves.textContent = `${totalMoves} Moves`;
+        /* After a certain number of moves, switch out solid stars with outlined (hollow) stars. */
+        if (totalMoves === 25) {
+            const thirdStar = document.querySelectorAll('.fa-star')[2];
+            thirdStar.classList.replace('fa-star', 'fa-star-o');
+        } else if (totalMoves === 40) {
+            const secondStar = document.querySelectorAll('.fa-star')[1];
+            secondStar.classList.replace('fa-star', 'fa-star-o');
+        }
+    } else if (totalMoves === 0) { // If the function call is from resetGame().
+        moves.textContent = `${totalMoves} Moves`;
+        const lostStars = document.querySelectorAll('.fa-star-o');
+        if (lostStars.length) {
+            lostStars.forEach(star => star.classList.replace('fa-star-o', 'fa-star'));
+        }
+    }
 };
 
-// Initialize/randomize cards for a new game.
-const newCards = initCards();
-
-// Initialize game by hiding all cards and adding a random icon to each.
-const cardElements = document.querySelectorAll('.card');
-cardElements.forEach(el => el.classList.remove('open', 'match', 'show'));
-const cardSymbols = document.querySelectorAll('.card i');
-cardSymbols.forEach(el => {
-    const curIcon = el.classList[1];
-    el.classList.remove(curIcon);
-    const newIcon = newCards.pop();
-    el.classList.add(newIcon);
-});
-
-let cardsPicked = [];
-let totalGuesses = 0;
-
-// Select deck and add event listener for clicks.
+// Add event listener for card selections.
 const deck = document.querySelector('ul.deck');
 deck.addEventListener('click', (e) => {
     // Don't do anything if a card (li) wasn't clicked.
@@ -99,7 +123,8 @@ deck.addEventListener('click', (e) => {
         /*If the target card isn't revealed, reveal it and add the card's child icon to the picked cards array. Increment total game moves. */
         revealCard(targetCard);
         cardsPicked.push(targetCard.querySelector('i'));
-        setTimeout(updateGuessCount, 0);
+        totalMoves += 1;
+        setTimeout(updateMoveDisplay, 0);
     }
     // If two cards have been picked, check the cards for a match.
     if (cardsPicked.length === 2) {
@@ -107,3 +132,9 @@ deck.addEventListener('click', (e) => {
         cardsPicked = [];
     }
 });
+
+// Add event listener for clicks on the reset button.
+const restart = document.querySelector('.restart');
+restart.addEventListener('click', resetGame);
+
+resetGame();
