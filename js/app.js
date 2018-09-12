@@ -64,8 +64,9 @@ function hideCards(...cards) {
 };
 
 function checkGameOver(matches) {
-    if (matches === 8) {
+    if (matches === 1) {
         gameStats.style.display = 'inline-block';
+        gameStats.classList.add('slide-in');
         const timeStats = document.querySelector('.total-time');
         const starsEarned = document.querySelector('.star-rating');
         timeStats.textContent = `It took you ${totalTime} to complete the game!`;
@@ -108,6 +109,7 @@ function resetGame() {
     initCards();
     resetClock();
     gameStats.style.display = 'none';
+    gameStats.classList.remove('slide-in');
 }
 
 function checkCards(cards) {
