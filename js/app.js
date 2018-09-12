@@ -49,15 +49,17 @@ function hideCards(...cards) {
 };
 
 function checkCards(cards) {
-    const firstCard = cards[0];
-    const secondCard = cards[1];
-    if (firstCard.classList[1] === secondCard.classList[1]) {
+    const firstIcon = cards[0];
+    const secondIcon = cards[1];
+    const firstCard = firstIcon.parentNode;
+    const secondCard = secondIcon.parentNode;
+    if (firstIcon.classList[1] === secondIcon.classList[1]) {
         /* Select the Icon's parent node (the card li) and adjust classes accordingly. */
-        firstCard.parentNode.classList.add('match');
-        secondCard.parentNode.classList.add('match');
+        firstCard.classList.add('match');
+        secondCard.classList.add('match');
     } else {
         // Keep both flipped cards shown for 1 second, then hide them.
-        setTimeout(hideCards, 1000, firstCard.parentNode, secondCard.parentNode);
+        setTimeout(hideCards, 1000, firstCard, secondCard);
     }
 };
 
