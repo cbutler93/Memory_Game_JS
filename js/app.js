@@ -1,4 +1,4 @@
-/* // TODO:
+/* TODO:
 1) After checking for a card match, check if the game is over.
 2) When the game is over, show the total number of guesses it took to complete the game.
 3) After a certain number of guesses, adjust the star rating.
@@ -56,10 +56,15 @@ function checkCards(cards) {
         firstCard.parentNode.classList.add('match');
         secondCard.parentNode.classList.add('match');
     } else {
-        hideCards(firstCard.parentNode, secondCard.parentNode);
+        // Keep both flipped cards shown for 1 second, then hide them.
+        setTimeout(hideCards, 1000, firstCard.parentNode, secondCard.parentNode);
     }
-    // Reset cardsPicked array after a match is checked.
-    cardsPicked = [];
+};
+
+function updateGuessCount() {
+    totalGuesses += 1;
+    const moves = document.querySelector('.moves');
+    moves.textContent = totalGuesses;
 };
 
 // Initialize/randomize cards for a new game.
@@ -92,10 +97,11 @@ deck.addEventListener('click', (e) => {
         /*If the target card isn't revealed, reveal it and add the card's child icon to the picked cards array. Increment total game moves. */
         revealCard(targetCard);
         cardsPicked.push(targetCard.querySelector('i'));
-        totalGuesses += 1;
+        setTimeout(updateGuessCount, 0);
     }
     // If two cards have been picked, check the cards for a match.
     if (cardsPicked.length === 2) {
         checkCards(cardsPicked);
+        cardsPicked = [];
     }
 });
