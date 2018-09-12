@@ -8,7 +8,7 @@ const restart = document.querySelector('.restart');
 const playAgain = document.querySelector('.play-again');
 const gameStats = document.querySelector('.finished');
 
-// Create function to scramble initialized cards array
+// Scramble initialized cards array
 function randomizeArray(arr) {
      const randIndices = []; // Array to hold random indices selected.
      const randArray = []; // Array to hold elements from random array indices.
@@ -24,6 +24,7 @@ function randomizeArray(arr) {
      return randArray;
 };
 
+// Create a new deck of cards for a new game.
 function initCards() {
      // Initialize Card Array
      const initCards = [
@@ -70,13 +71,13 @@ function checkGameOver(matches) {
         const starsEarned = document.querySelector('.star-rating');
         timeStats.textContent = `It took you ${totalTime} to complete the game!`;
         starsEarned.textContent = `You finished the game with a ${starRating}-star rating!`;
-        clearInterval(timer);
+        clearInterval(timer); // Stop timer.
     }
 };
 
 function setClock() {
-    const startMessage = document.querySelector('p.start');
-    startMessage.classList.add('shrink');
+    const startMessage = document.querySelector('.start');
+    startMessage.classList.add('shrink'); // Get rid of 'Select card to start' element.
     const startTime = new Date().getTime();
     const minuteSpan = document.querySelector('span.minutes');
     const secondSpan = document.querySelector('span.seconds');
@@ -89,11 +90,11 @@ function setClock() {
         minuteSpan.textContent = minutes < 10 ? `0${minutes}` : `${minutes}`;
         totalTime = `${minutes} ${minutes !== 1 ? `Minutes` : `Minute`} and ${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
     }, 1000);
-    return timer;
+    return timer; // return timer so it can be stopped when the game is over or reset.
 }
 
 function resetClock() {
-    const startMessage = document.querySelector('p.start');
+    const startMessage = document.querySelector('.start');
     startMessage.classList.remove('shrink');
     const timerElements = document.querySelectorAll('.clock span');
     timerElements.forEach(el => el.textContent = "00");
@@ -141,7 +142,7 @@ function checkCards(cards) {
 
 function updateMoveDisplay() {
     const moves = document.querySelector('.moves');
-    if (totalMoves > 0) { // If the function call isn't to reset the moves/star ratings.
+    if (totalMoves > 0) { /* If the function isn't being called to reset the moves/star ratings. */
         moves.textContent = `${totalMoves} Moves`;
         /* After a certain number of moves, switch out solid stars with outlined (hollow) stars. */
         if (totalMoves === 25) {
@@ -167,7 +168,7 @@ deck.addEventListener('click', (e) => {
     if (totalMoves === 0) {
         timer = setClock();
     }
-
+    // if a card was clicked while the game was already finished, reset the game and timer.
     if (gameOver) {
         resetGame();
         timer = setClock();
@@ -194,8 +195,7 @@ deck.addEventListener('click', (e) => {
 
 // Add event listener for clicks on the reset button.
 restart.addEventListener('click', resetGame);
-
 // Add event listener for play again button.
 playAgain.addEventListener('click', resetGame);
-
+// Initialize game on page load/refresh.
 resetGame();
