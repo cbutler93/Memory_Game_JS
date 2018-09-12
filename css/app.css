@@ -40,7 +40,32 @@ h1 {
  .clock {
      margin-top: 20px;
      margin-bottom: 20px;
-     font-size: 23px;
+     font-size: 20px;
+     text-align: center;
+ }
+
+ .clock span {
+     padding: 5px;
+     font-size: 50px;
+     color: #2e3d49;
+ }
+
+ .minutes::after {
+     content: 'Minutes';
+     font-size: 12px;
+ }
+
+ .seconds::after {
+     content: 'Seconds';
+     font-size: 12px;
+ }
+
+ .clock .shrink {
+     animation: shrink;
+     animation-duration: 0.5s;
+     animation-iteration-count: 1;
+     animation-timing-function: ease-in;
+     animation-fill-mode: forwards;
  }
 
 /*
@@ -61,6 +86,14 @@ h1 {
     50% {transform: rotateZ(180deg);}
     75% {transform: rotateZ(270deg);}
     100% {transform: rotateZ(360deg);}
+}
+
+@keyframes shrink {
+    0% {font-size: 20px;}
+    25% {font-size: 25px;}
+    50% {font-size: 16px;}
+    75% {font-size: 8px;}
+    100% {font-size: 0px; display: none; margin: 0;}
 }
 
 /*

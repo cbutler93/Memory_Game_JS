@@ -65,15 +65,19 @@ function checkGameOver(matches) {
     }
 };
 
-function setClock(startTime) {
-    const clock = document.querySelector('.timer');
+function setClock() {
+    const startMessage = document.querySelector('p.start');
+    startMessage.classList.add('shrink');
+    const startTime = new Date().getTime();
+    const minuteSpan = document.querySelector('span.minutes');
+    const secondSpan = document.querySelector('span.seconds');
     setInterval(() => {
         const curTime = new Date().getTime();
         const totalSeconds = ((curTime - startTime) / 1000).toFixed(0);
         const seconds = totalSeconds < 60 ? totalSeconds : totalSeconds % 60;
         const minutes = Math.floor(totalSeconds / 60);
-        const hours = Math.floor(minutes / 60);
-        clock.textContent = `${hours < 10 ? `0${hours}` : hours} : ${minutes < 10 ? `0${minutes}` : minutes} : ${seconds < 10 ? `0${seconds}` : seconds}`;
+        secondSpan.textContent = seconds < 10 ? `0${seconds}` : `${seconds}`;
+        minuteSpan.textContent = minutes < 10 ? `0${minutes}` : `${minutes}`;
     }, 1000);
 }
 
@@ -136,8 +140,7 @@ function updateMoveDisplay() {
 const deck = document.querySelector('ul.deck');
 deck.addEventListener('click', (e) => {
     if (totalMoves === 0) {
-        const t0 = new Date().getTime();
-        setClock(t0);
+        setClock();
     }
     // Don't do anything if a card (li) wasn't clicked.
     if (e.target.nodeName !== 'LI') return;
