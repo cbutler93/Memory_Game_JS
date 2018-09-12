@@ -138,6 +138,7 @@ function checkCards(cards) {
         }
         setTimeout(hideCards, 1000, firstCard, secondCard);
     }
+    totalMoves += 1;
 }
 
 function updateMoveDisplay() {
@@ -145,11 +146,11 @@ function updateMoveDisplay() {
     if (totalMoves > 0) { /* If the function isn't being called to reset the moves/star ratings. */
         moves.textContent = `${totalMoves} Moves`;
         /* After a certain number of moves, switch out solid stars with outlined (hollow) stars. */
-        if (totalMoves === 25) {
+        if (totalMoves === 16) {
             const thirdStar = document.querySelectorAll('.fa-star')[2];
             thirdStar.classList.replace('fa-star', 'fa-star-o');
             starRating = 2;
-        } else if (totalMoves === 40) {
+        } else if (totalMoves === 24) {
             const secondStar = document.querySelectorAll('.fa-star')[1];
             secondStar.classList.replace('fa-star', 'fa-star-o');
             starRating = 1;
@@ -165,7 +166,8 @@ function updateMoveDisplay() {
 
 // Add event listener for card selections.
 deck.addEventListener('click', (e) => {
-    if (totalMoves === 0) {
+    /* If the player just started the game, start the clock. */
+    if ((totalMoves === 0) && (cardsPicked.length === 0)) {
         timer = setClock();
     }
     // if a card was clicked while the game was already finished, reset the game and timer.
@@ -183,7 +185,6 @@ deck.addEventListener('click', (e) => {
         /*If the target card isn't revealed, reveal it and add the card's child icon to the picked cards array. Increment total game moves. */
         revealCard(targetCard);
         cardsPicked.push(targetCard.querySelector('i'));
-        totalMoves += 1;
         setTimeout(updateMoveDisplay, 0);
     }
     // If two cards have been picked, check the cards for a match.
