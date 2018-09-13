@@ -146,7 +146,7 @@ function updateMoveDisplay() {
     if (totalMoves > 0) { /* If the function isn't being called to reset the moves/star ratings. */
         moves.textContent = `${totalMoves} Moves`;
         /* After a certain number of moves, switch out solid stars with outlined (hollow) stars. */
-        if (totalMoves === 1) {
+        if (totalMoves === 16) {
             const thirdStar = document.querySelectorAll('.fa-star')[2];
             thirdStar.classList.replace('fa-star', 'fa-star-o');
             starRating = 2;
