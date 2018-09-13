@@ -146,7 +146,7 @@ function updateMoveDisplay() {
     if (totalMoves > 0) { /* If the function isn't being called to reset the moves/star ratings. */
         moves.textContent = `${totalMoves} Moves`;
         /* After a certain number of moves, switch out solid stars with outlined (hollow) stars. */
-        if (totalMoves === 16) {
+        if (totalMoves === 1) {
             const thirdStar = document.querySelectorAll('.fa-star')[2];
             thirdStar.classList.replace('fa-star', 'fa-star-o');
             starRating = 2;
@@ -185,12 +185,12 @@ deck.addEventListener('click', (e) => {
         /*If the target card isn't revealed, reveal it and add the card's child icon to the picked cards array. Increment total game moves. */
         revealCard(targetCard);
         cardsPicked.push(targetCard.querySelector('i'));
-        setTimeout(updateMoveDisplay, 0);
     }
     // If two cards have been picked, check the cards for a match.
     if (cardsPicked.length === 2) {
         checkCards(cardsPicked);
         cardsPicked = [];
+        setTimeout(updateMoveDisplay, 0);
     }
 });
 
