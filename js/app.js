@@ -109,7 +109,11 @@ function setClock() {
         const minutes = Math.floor(totalSeconds / 60);
         secondSpan.textContent = seconds < 10 ? `0${seconds}` : `${seconds}`;
         minuteSpan.textContent = minutes < 10 ? `0${minutes}` : `${minutes}`;
-        totalTime = `${minutes} ${minutes !== 1 ? `Minutes` : `Minute`} and ${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
+        if (minutes === 0) {
+            totalTime = `${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
+        } else {
+            totalTime = `${minutes} ${minutes !== 1 ? `Minutes` : `Minute`} and ${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
+        }
     }, 1000);
     return timer; // return timer so it can be stopped when the game is over or reset.
 }
