@@ -17,7 +17,8 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
+    background: #ffffff url('../img/geometry2.png');
+    /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
 
@@ -89,81 +90,45 @@ h1 {
 /*
  * Clock
  */
-
- .clock {
-     margin-top: 20px;
-     margin-bottom: 20px;
-     font-size: 20px;
-     text-align: center;
- }
-
- .clock span {
-     padding: 5px;
-     font-size: 50px;
-     color: #2e3d49;
- }
-
- .clock .start {
-     margin: 0;
-     padding: 0;
- }
-
- .minutes::after {
-     content: 'Minutes';
-     font-size: 12px;
- }
-
- .seconds::after {
-     content: 'Seconds';
-     font-size: 12px;
- }
-
- .clock .shrink {
-     animation: shrink;
-     animation-duration: 0.5s;
-     animation-iteration-count: 1;
-     animation-timing-function: ease-in;
-     animation-fill-mode: forwards;
- }
-
-/*
- * Animations
- */
-
-@keyframes wiggle {
-    0% {transform: rotateZ(0deg);}
-    25% {transform: rotateZ(5deg);}
-    50% {transform: rotateZ(0deg);}
-    75% {transform: rotateZ(-5deg);}
-    100% {transform: rotateZ(0deg);}
+.clock {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: center;
 }
 
-@keyframes match {
-    0% {transform: rotateZ(0deg);}
-    25% {transform: rotateZ(90deg);}
-    50% {transform: rotateZ(180deg);}
-    75% {transform: rotateZ(270deg);}
-    100% {transform: rotateZ(360deg);}
+.clock span {
+    padding: 5px;
+    font-size: 50px;
+    color: #2e3d49;
 }
 
-@keyframes shrink {
-    0% {font-size: 20px;}
-    25% {font-size: 25px;}
-    50% {font-size: 16px;}
-    75% {font-size: 8px;}
-    100% {font-size: 0px; display: none;}
+.clock .start {
+    margin: 0;
+    padding: 0;
 }
 
-@keyframes slide-in {
-    0% {width: 0%;}
-    50% {width: 60%;}
-    100% {width: 50%;}
+.minutes::after {
+    content: 'Minutes';
+    font-size: 12px;
+}
+
+.seconds::after {
+    content: 'Seconds';
+    font-size: 12px;
+}
+
+.clock .shrink {
+    animation: shrink;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
 }
 
 /*
  * Styles for the deck of cards
  */
-
 .deck {
     width: 660px;
     min-height: 680px;
@@ -219,7 +184,6 @@ h1 {
 /*
  * Styles for the Score Panel
  */
-
 .score-panel {
     text-align: left;
     width: 345px;
@@ -241,4 +205,88 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/*
+ * Animations
+ */
+@keyframes wiggle {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    25% {
+        transform: rotateZ(5deg);
+    }
+
+    50% {
+        transform: rotateZ(0deg);
+    }
+
+    75% {
+        transform: rotateZ(-5deg);
+    }
+
+    100% {
+        transform: rotateZ(0deg);
+    }
+}
+
+@keyframes match {
+    0% {
+        transform: rotateZ(0deg);
+    }
+
+    25% {
+        transform: rotateZ(90deg);
+    }
+
+    50% {
+        transform: rotateZ(180deg);
+    }
+
+    75% {
+        transform: rotateZ(270deg);
+    }
+
+    100% {
+        transform: rotateZ(360deg);
+    }
+}
+
+@keyframes shrink {
+    0% {
+        font-size: 20px;
+    }
+
+    25% {
+        font-size: 25px;
+    }
+
+    50% {
+        font-size: 16px;
+    }
+
+    75% {
+        font-size: 8px;
+    }
+
+    100% {
+        font-size: 0px;
+        display: none;
+    }
+}
+
+@keyframes slide-in {
+    0% {
+        width: 0%;
+    }
+
+    50% {
+        width: 60%;
+    }
+
+    100% {
+        width: 50%;
+    }
 }
