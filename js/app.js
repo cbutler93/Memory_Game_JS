@@ -1,7 +1,3 @@
-/* TODO:
-1) Clean up code.
-*/
-
 let totalMatches, cardsPicked, totalMoves, timer, totalTime, starRating, gameOver;
 const deck = document.querySelector('ul.deck');
 const restart = document.querySelector('.restart');
@@ -51,27 +47,6 @@ function initCards() {
     });
 }
 
-function resetClock() {
-    const startMessage = document.querySelector('.start');
-    startMessage.classList.remove('shrink');
-    const timerElements = document.querySelectorAll('.clock span');
-    timerElements.forEach(el => el.textContent = "00");
-    clearInterval(timer);
-}
-
-function resetGame() {
-    cardsPicked = [];
-    totalMoves = 0;
-    starRating = 3;
-    totalMatches = 0;
-    gameOver = false;
-    updateMoveDisplay();
-    initCards();
-    resetClock();
-    gameStats.style.display = 'none';
-    gameStats.classList.remove('slide-in');
-}
-
 function revealCard(el) {
     el.classList.add('open', 'show');
 }
@@ -81,41 +56,6 @@ function hideCards(...cards) {
         card.classList.remove('open', 'show', 'wrong');
         card.style.animationName = 'none';
     }
-}
-
-function checkGameOver(matches) {
-    if (matches === 8) { // There are 16 cards, 8 two-card matches means all cards matched.
-        gameOver = true;
-        gameStats.style.display = 'inline-block';
-        gameStats.classList.add('slide-in');
-        const timeStats = document.querySelector('.total-time');
-        const starsEarned = document.querySelector('.star-rating');
-        timeStats.textContent = `It took you ${totalTime} to complete the game!`;
-        starsEarned.textContent = `You finished the game with a ${starRating}-star rating!`;
-        clearInterval(timer); // Stop timer.
-    }
-}
-
-function setClock() {
-    const startMessage = document.querySelector('.start');
-    startMessage.classList.add('shrink'); // Get rid of 'Select card to start' element.
-    const startTime = new Date().getTime();
-    const minuteSpan = document.querySelector('span.minutes');
-    const secondSpan = document.querySelector('span.seconds');
-    const timer = setInterval(() => {
-        const curTime = new Date().getTime();
-        const totalSeconds = ((curTime - startTime) / 1000).toFixed(0);
-        const seconds = totalSeconds < 60 ? totalSeconds : totalSeconds % 60;
-        const minutes = Math.floor(totalSeconds / 60);
-        secondSpan.textContent = seconds < 10 ? `0${seconds}` : `${seconds}`;
-        minuteSpan.textContent = minutes < 10 ? `0${minutes}` : `${minutes}`;
-        if (minutes === 0) {
-            totalTime = `${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
-        } else {
-            totalTime = `${minutes} ${minutes !== 1 ? `Minutes` : `Minute`} and ${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
-        }
-    }, 1000);
-    return timer; // return timer so it can be stopped when the game is over or reset.
 }
 
 function checkCards(cards) {
@@ -143,6 +83,62 @@ function checkCards(cards) {
         setTimeout(hideCards, 1000, firstCard, secondCard);
     }
     totalMoves += 1;
+}
+
+function setClock() {
+    const startMessage = document.querySelector('.start');
+    startMessage.classList.add('shrink'); // Get rid of 'Select card to start' element.
+    const startTime = new Date().getTime();
+    const minuteSpan = document.querySelector('span.minutes');
+    const secondSpan = document.querySelector('span.seconds');
+    const timer = setInterval(() => {
+        const curTime = new Date().getTime();
+        const totalSeconds = ((curTime - startTime) / 1000).toFixed(0);
+        const seconds = totalSeconds < 60 ? totalSeconds : totalSeconds % 60;
+        const minutes = Math.floor(totalSeconds / 60);
+        secondSpan.textContent = seconds < 10 ? `0${seconds}` : `${seconds}`;
+        minuteSpan.textContent = minutes < 10 ? `0${minutes}` : `${minutes}`;
+        if (minutes === 0) {
+            totalTime = `${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
+        } else {
+            totalTime = `${minutes} ${minutes !== 1 ? `Minutes` : `Minute`} and ${seconds} ${seconds !== 1 ? `Seconds` : `Second`}`;
+        }
+    }, 1000);
+    return timer; // return timer so it can be stopped when the game is over or reset.
+}
+
+function resetClock() {
+    const startMessage = document.querySelector('.start');
+    startMessage.classList.remove('shrink');
+    const timerElements = document.querySelectorAll('.clock span');
+    timerElements.forEach(el => el.textContent = "00");
+    clearInterval(timer);
+}
+
+function resetGame() {
+    cardsPicked = [];
+    totalMoves = 0;
+    starRating = 3;
+    totalMatches = 0;
+    gameOver = false;
+    updateMoveDisplay();
+    initCards();
+    resetClock();
+    gameStats.style.display = 'none';
+    gameStats.classList.remove('slide-in');
+}
+
+function checkGameOver(matches) {
+    if (matches === 8) { // There are 16 cards, 8 two-card matches means all cards matched.
+        gameOver = true;
+        gameStats.style.display = 'inline-block';
+        gameStats.classList.add('slide-in');
+        const timeStats = document.querySelector('.total-time');
+        const starsEarned = document.querySelector('.star-rating');
+        timeStats.textContent = `It took you ${totalTime} to complete the game!`;
+        starsEarned.textContent = `You finished the game with a ${starRating}-star rating!`;
+        clearInterval(timer); // Stop timer.
+    }
 }
 
 function updateMoveDisplay() {
